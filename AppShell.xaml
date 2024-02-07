@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="clipboardLibrary.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:clipboardLibrary"
+    Shell.FlyoutBehavior="Disabled"
+    Title="clipboardLibrary"
+    
+    xmlns:views="clr-namespace:clipboardLibrary.Views"
+    BackgroundColor="LightBlue">
+
+    <TabBar>
+        <Tab Title="Home" Icon="home_icon.svg">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:HomePage}"
+                Route="homePage" />
+        </Tab>
+
+        <Tab Title="auto" Icon="auto_icon.svg">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:AutoPage}"
+                Route="homePage" />
+        </Tab>
+
+        <Tab Title="pdf" Icon="page_icon.svg">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:PdfPage}"
+                Route="homePage" />
+        </Tab>
+
+        <Tab Title="export" Icon="export_icon.svg">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:ExportPage}"
+                Route="homePage" />
+        </Tab>
+    </TabBar>
+</Shell>
