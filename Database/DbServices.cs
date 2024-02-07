@@ -1,16 +1,10 @@
 ﻿using clipboardLibrary.Models;
 using SQLite;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace clipboardLibrary.Database
 {
-    public class DatabaseContext : IAsyncDisposable
+    public class DbServices
     {
         private const string DbName = "ClipLibrary.db3";
         private static string DbPath = Path.Combine(FileSystem.AppDataDirectory, DbName);
@@ -25,63 +19,56 @@ namespace clipboardLibrary.Database
             await Db.CreateTableAsync<BooksList>();
         }
 
-
-        private async Task<AsyncTableQuery<TTable>> GetTableAsync<TTable>() where TTable : class, new()
+        public async Task AddClip(string BookName, string titel, string DataVar)
         {
-            await CreateTableIfNotExists<TTable>();
-            return Database.Table<TTable>();
+            await Init();
+
+            var clip = new ClipData
+            {
+                Book = BookName,
+                Title = titel,
+                Data = DataVar
+            };
+            await Db.InsertAsync(clip)
+                .ContinueWith(t => { Debug.WriteLine("new clip added id = {0}", clip.Id); });
         }
 
-        public async Task<IEnumerable<TTable>> GetAllAsync<TTable>() where TTable : class, new()
+        public async Task<bool> RemoveClip(int id)
         {
-            var table = await GetTableAsync<TTable>();
-            return await table.ToListAsync();
+            await Init();
+            return await Db.DeleteAsync<ClipData>(id) > 0;
         }
 
-        public async Task<IEnumerable<TTable>> GetFileteredAsync<TTable>(Expression<Func<TTable, bool>> predicate) where TTable : class, new()
+        public async Task<IEnumerable<ClipData>> GetBook(string BookName)
         {
-            var table = await GetTableAsync<TTable>();
-            return await table.Where(predicate).ToListAsync();
+            await Init();
+            return await Db.QueryAsync<ClipData>("select * from ClipData where Book = ?", BookName);
         }
 
-        private async Task<TResult> Execute<TTable, TResult>(Func<Task<TResult>> action) where TTable : class, new()
+        public async Task RemoveBook(string BookName)
         {
-            await CreateTableIfNotExists<TTable>();
-            return await action();
+            await Init();
+            await Db.QueryAsync<ClipData>("delete * from ClipData where Book = ?", BookName)
+                .ContinueWith(t => { Debug.WriteLine("deleted Book " + BookName); });
         }
 
-        public async Task<TTable> GetItemByKeyAsync<TTable>(object primaryKey) where TTable : class, new()
+        public async Task<bool> UpdateClip(ClipData newData)
         {
-            //await CreateTableIfNotExists<TTable>();
-            //return await Database.GetAsync<TTable>(primaryKey);
-            return await Execute<TTable, TTable>(async () => await Database.GetAsync<TTable>(primaryKey));
+            await Init();
+            return await Db.UpdateAsync(newData) > 0;
         }
 
-        public async Task<bool> AddItemAsync<TTable>(TTable item) where TTable : class, new()
+        public async Task<List<BooksList>> GetAllBooks()
         {
-            //await CreateTableIfNotExists<TTable>();
-            //return await Database.InsertAsync(item) > 0;
-            return await Execute<TTable, bool>(async () => await Database.InsertAsync(item) > 0);
+            await Init();
+            return await Db.Table<BooksList>().ToListAsync();
         }
 
-        public async Task<bool> UpdateItemAsync<TTable>(TTable item) where TTable : class, new()
+        public async Task AddBook(BooksList book)
         {
-            await CreateTableIfNotExists<TTable>();
-            return await Database.UpdateAsync(item) > 0;
+            await Init();
+            await Db.InsertAsync(book);
         }
 
-        public async Task<bool> DeleteItemAsync<TTable>(TTable item) where TTable : class, new()
-        {
-            await CreateTableIfNotExists<TTable>();
-            return await Database.DeleteAsync(item) > 0;
-        }
-
-        public async Task<bool> DeleteItemByKeyAsync<TTable>(object primaryKey) where TTable : class, new()
-        {
-            await CreateTableIfNotExists<TTable>();
-            return await Database.DeleteAsync<TTable>(primaryKey) > 0;
-        }
-
-        public async ValueTask DisposeAsync() => await _connection?.CloseAsync();
     }
 }
