@@ -19,7 +19,7 @@ namespace clipboardLibrary.ViewModel
         private ObservableCollection<BooksList> allBooks;
 
         [ObservableProperty]
-        private BooksList _entryBook;
+        private BooksList _otpBook;
 
         [ObservableProperty]
         private string _entryText;
@@ -31,6 +31,7 @@ namespace clipboardLibrary.ViewModel
         [RelayCommand]
         public async Task LoadBooks()
         {
+            AllBooks.Clear();
             var FetchBooks = await _db.GetAllBooks();
             if(FetchBooks is not null && FetchBooks.Any())
             {
@@ -52,6 +53,7 @@ namespace clipboardLibrary.ViewModel
                 ItemCount = 0
             };
             await _db.AddBook(NewBook);
+            await LoadBooks();
             EntryText = string.Empty;
         }
 

@@ -40,7 +40,7 @@
 
             <CollectionView.ItemTemplate>
 
-                <DataTemplate>
+                <DataTemplate x:DataType="Models:BooksList">
                     <VerticalStackLayout>
 
                         <SwipeView>
@@ -51,20 +51,27 @@
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
-                            <Frame BackgroundColor="SkyBlue" Margin="10"
+                            <Frame BackgroundColor="SkyBlue" Margin="15,10"
                                    HeightRequest="70" CornerRadius="10"
                                    HorizontalOptions="Fill" VerticalOptions="Center">
 
-                                <HorizontalStackLayout>
-                                    <Label Text="{Binding  EntryBook.Book}" 
-                                           FontSize="Large" Margin="5,0,20,0"/>
+                                <Grid>
 
-                                    <Line Grid.Column="1" X1="0" Y1="40" StrokeDashArray="2,1"
-                                          Stroke="Black" StrokeThickness="3"/>
+                                    <Label Grid.Column="0" Grid.ColumnSpan="2" 
+                                           Text="{Binding  Book}" HorizontalOptions="Start"
+                                           FontSize="Large" Margin="15,0,20,0"/>
 
-                                    <Label Text="{Binding EntryBook.ItemCount}" TextColor="Red"
-                                           FontSize="Large" Margin="30,0,0,0"/>
-                                </HorizontalStackLayout>
+                                    <HorizontalStackLayout 
+                                        Grid.Column="3" HorizontalOptions="EndAndExpand">
+
+                                        <Line  X1="0" Y1="40" StrokeDashArray="2,1"
+                                               Stroke="Black" StrokeThickness="3"/>
+
+                                        <Label Text="{Binding ItemCount, StringFormat='{0} Items'}" TextColor="Red"
+                                           FontSize="Large" Margin="10,0,20,0"/>
+                                    </HorizontalStackLayout>
+                                
+                                </Grid>
                             </Frame>
                         </SwipeView>
                     </VerticalStackLayout>
