@@ -24,6 +24,7 @@
                 <Frame Padding="10, 5" Grid.Column="0" Margin="0, 0, 20, 10">
 
                     <Entry Placeholder="Create a new Book"
+                           TextChanged="Entry_TextChanged"
                            Text="{Binding EntryText}"
                            TextColor="#333"/>
                 </Frame>
@@ -35,9 +36,9 @@
         </VerticalStackLayout>
 
 
-        <CollectionView Grid.Row="1"
+        <CollectionView Grid.Row="1" SelectionMode="Single"
                         ItemsSource="{Binding AllBooks}">
-
+            
             <CollectionView.ItemTemplate>
 
                 <DataTemplate x:DataType="Models:BooksList">
@@ -51,9 +52,16 @@
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
-                            <Frame BackgroundColor="SkyBlue" Margin="15,10"
+                            <Frame BackgroundColor="SkyBlue" Margin="10"
                                    HeightRequest="70" CornerRadius="10"
                                    HorizontalOptions="Fill" VerticalOptions="Center">
+                                
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BooksViewModel}},
+                                        Path=ShowBookContentCommand}">
+                                    </TapGestureRecognizer>
+                                </Frame.GestureRecognizers>
 
                                 <Grid>
 

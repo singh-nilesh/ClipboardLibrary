@@ -7,6 +7,9 @@ namespace clipboardLibrary
         public AppShell()
         {
             InitializeComponent();
+
+            Routing.RegisterRoute(nameof(BookContents), typeof(BookContents));
+
         }
     }
 }

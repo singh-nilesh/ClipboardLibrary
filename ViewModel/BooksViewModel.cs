@@ -1,8 +1,10 @@
 ﻿using clipboardLibrary.Database;
 using clipboardLibrary.Models;
+using clipboardLibrary.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace clipboardLibrary.ViewModel
 {
@@ -19,27 +21,36 @@ namespace clipboardLibrary.ViewModel
         private ObservableCollection<BooksList> allBooks;
 
         [ObservableProperty]
-        private BooksList _otpBook;
-
-        [ObservableProperty]
         private string _entryText;
-
-        [ObservableProperty]
-        private bool _isBusy;
 
 
         [RelayCommand]
         public async Task LoadBooks()
         {
             AllBooks.Clear();
-            var FetchBooks = await _db.GetAllBooks();
-            if(FetchBooks is not null && FetchBooks.Any())
+            if(string.IsNullOrEmpty(EntryText))
             {
-                foreach(var book in FetchBooks) 
+                var FetchBooks = await _db.GetAllBooks();
+                if (FetchBooks is not null && FetchBooks.Any())
                 {
-                    AllBooks.Add(book);
+                    foreach (var book in FetchBooks)
+                    {
+                        AllBooks.Add(book);
+                    }
                 }
             }
+            else
+            {
+                var FetchBooks = await _db.GetAllBooks();
+                if (FetchBooks is not null && FetchBooks.Any())
+                {
+                    foreach (var book in FetchBooks.Where(b => b.Book.ToLower().Contains(EntryText.ToLower())))
+                    {
+                        AllBooks.Add(book);
+                    }
+                }
+            }
+            
         }
 
         [RelayCommand]
@@ -53,10 +64,21 @@ namespace clipboardLibrary.ViewModel
                 ItemCount = 0
             };
             await _db.AddBook(NewBook);
-            await LoadBooks();
             EntryText = string.Empty;
         }
 
 
+        public static BooksList SelectedBook;
+
+        [RelayCommand]
+        async Task ShowBookContent(BooksList book)
+        {
+            if (book is null)
+                return;
+            SelectedBook = book;
+            await Shell.Current.GoToAsync($"{nameof(BookContents)}", true);
+        }
+
+        
     }
 }

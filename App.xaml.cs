@@ -1,4 +1,6 @@
-﻿namespace clipboardLibrary
+﻿using clipboardLibrary.Views;
+
+namespace clipboardLibrary
 {
     public partial class App : Application
     {

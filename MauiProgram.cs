@@ -17,9 +17,13 @@ namespace clipboardLibrary
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<BooksViewModel>();
             builder.Services.AddSingleton<DbServices>();
+
+            builder.Services.AddTransient<ShowBookViewModel>();
+            builder.Services.AddTransient<BookContents>();
 
 #if DEBUG
             builder.Logging.AddDebug();

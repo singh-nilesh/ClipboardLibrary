@@ -17,4 +17,9 @@ public partial class HomePage : ContentPage
 		base.OnAppearing();
 		await _vm.LoadBooks();
 	}
+
+    private async void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+		await _vm.LoadBooks();
+    }
 }
