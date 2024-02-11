@@ -2,14 +2,14 @@
 <toolkit:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="clipboardLibrary.Views.PopupPage"
+                       
+             xmlns:vm="clr-namespace:clipboardLibrary.ViewModel"
+
              xmlns:toolkit="clr-namespace:MauiPopup.Views;assembly=MauiPopup">
     
     <VerticalStackLayout Padding="10" WidthRequest="450">
         <Label Text="Add Note" HorizontalOptions="Center" FontSize="Title"/>
-        
-        <Entry x:Name="BookName" Placeholder="Book name" FontSize="Medium"  HorizontalOptions="Fill"
-               FontAttributes="Bold"/>
-        
+
         <Entry x:Name="NotesTitel" Placeholder="Titel" FontSize="Large" HorizontalOptions="Fill"/>
         
         <Frame HeightRequest="200" HorizontalOptions="Fill">
@@ -17,9 +17,12 @@
                     VerticalTextAlignment="Start" IsSpellCheckEnabled="True"/>
         </Frame>
 
+        <Label Text="Unable to save, Body can't be empty" x:Name="lblWarning" 
+               FontSize="Body" TextColor="Red" IsVisible="false"/>
+
         <Grid Padding="25">
             <Button Grid.Column="0" Text="Save" FontSize="Large" Margin="50, 0,0,0"
-                    HorizontalOptions="Start" Clicked="Button_Clicked"/>
+                    HorizontalOptions="Start" Clicked="Submit_Clicked"/>
 
             <Button Grid.Column="1" Text="Cancel" FontSize="Large" Margin="0,0,  50,0"
                     HorizontalOptions="End" Clicked="Cancel_Clicked"/>

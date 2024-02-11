@@ -16,14 +16,23 @@ public partial class PopupPage : BasePopupPage
         MauiPopup.PopupAction.ClosePopup();
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
+    private void Submit_Clicked(object sender, EventArgs e)
     {
-        var Notes = new ClipData
+        if(string.IsNullOrEmpty(this.NotesBody.Text)) 
         {
-            Book = this.BookName.Text.ToString(),
-            Title = this.NotesTitel.Text.ToString(),
-            Data = this.NotesBody.Text.ToString()
-        };
-        ShowBookViewModel.NewNotes = Notes;
+            this.lblWarning.IsVisible = true;
+        }
+        else
+        {
+            this.lblWarning.IsVisible = false;
+            var Notes = new ClipData
+            {
+                Book = string.Empty,
+                Title = this.NotesTitel.Text.ToString(),
+                Data = this.NotesBody.Text.ToString()
+            };
+            ShowBookViewModel.NewNotes = Notes;
+            MauiPopup.PopupAction.ClosePopup();
+        }
     }
 }

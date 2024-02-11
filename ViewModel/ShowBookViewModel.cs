@@ -46,6 +46,7 @@ namespace clipboardLibrary.ViewModel
             await MauiPopup.PopupAction.DisplayPopup(new PopupPage());
             if (NewNotes is null) return;
 
+            NewNotes.Book = MyBook.Book;
             await _db.AddClip(NewNotes);
             NewNotes = null;
             await LoadNotes();
@@ -56,33 +57,29 @@ namespace clipboardLibrary.ViewModel
         [RelayCommand]
         public async Task LoadNotes()
         {
-            try
+            AllNotes.Clear();
+            if (string.IsNullOrEmpty(SearchEntry))
             {
-                AllNotes.Clear();
-                if (string.IsNullOrEmpty(SearchEntry))
+                var FetchNotes = await _db.GetBook(MyBook.Book);
+                if (FetchNotes is not null && FetchNotes.Any())
                 {
-                    var FetchNotes = await _db.GetBook(MyBook.Book);
-                    if (FetchNotes is not null && FetchNotes.Any())
+                    foreach (var note in FetchNotes)
                     {
-                        foreach (var note in FetchNotes)
-                        {
-                            AllNotes.Add(note);
-                        }
-                    }
-                }
-                else
-                {
-                    var FetchNotes = await _db.GetBook(MyBook.Book);
-                    if (FetchNotes is not null && FetchNotes.Any())
-                    {
-                        foreach (var note in FetchNotes.Where(n => n.Data.ToLower().Contains(SearchEntry.ToLower())))
-                        {
-                            AllNotes.Add(note);
-                        }
+                        AllNotes.Add(note);
                     }
                 }
             }
-            catch (Exception ex) { Debug.WriteLine("Cant load Books"); }
+            else
+            {
+                var FetchNotes = await _db.GetBook(MyBook.Book);
+                if (FetchNotes is not null && FetchNotes.Any())
+                {
+                    foreach (var note in FetchNotes.Where(n => n.Data.ToLower().Contains(SearchEntry.ToLower())))
+                    {
+                        AllNotes.Add(note);
+                    }
+                }
+            }
         }
     }
 }

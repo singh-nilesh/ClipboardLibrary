@@ -15,7 +15,7 @@
     <Grid RowDefinitions="Auto, *">
         <Frame Grid.Row="0" Padding="10, 5" Margin="0, 0, 10, 10" >
 
-            <Entry Placeholder="Search...." Text="{Binding SearchEntry}"  TextColor="#333"/>
+            <Entry x:Name="Search" Placeholder="Search...." Text="{Binding SearchEntry}"  TextColor="#333"/>
         </Frame>
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding AllNotes}">

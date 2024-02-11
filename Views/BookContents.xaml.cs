@@ -11,6 +11,4 @@ public partial class BookContents : ContentPage
 		BindingContext = vm;
 		vm.LoadNotes();
 	}
-
-
 }
