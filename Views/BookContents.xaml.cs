@@ -4,15 +4,13 @@ namespace clipboardLibrary.Views;
 
 public partial class BookContents : ContentPage
 {
-	public BookContents()
+	private ShowBookViewModel _vm;
+	public BookContents(ShowBookViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext = new ShowBookViewModel();
+		BindingContext = vm;
+		vm.LoadNotes();
 	}
 
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnNavigatedTo(args);
-    }
 
 }

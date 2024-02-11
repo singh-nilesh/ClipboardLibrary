@@ -9,71 +9,36 @@
              Title="{Binding MyBook.Book}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Print Book"/>
+        <ToolbarItem IconImageSource="edit_dots.png"/>
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto, *">
+        <Frame Grid.Row="0" Padding="10, 5" Margin="0, 0, 10, 10" >
 
-        <VerticalStackLayout Grid.Row="0" Padding="5">
-            <Label Padding="0, 0, 10, 20" Text="Dashboard"
-                   VerticalOptions="Center" HorizontalOptions="Start"
-                   FontSize="Large"/>
+            <Entry Placeholder="Search...." Text="{Binding SearchEntry}"  TextColor="#333"/>
+        </Frame>
 
-            <Grid ColumnDefinitions="*, 100">
-                <Frame Padding="10, 5" Grid.Column="0" Margin="0, 0, 10, 10">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding AllNotes}">
 
-                    <Entry Placeholder="Search...."
-                           Text=""
-                           TextColor="#333"/>
-                </Frame>
-                <Button Text="Add" Grid.Column="1" TextColor="#eee" FontSize="Large"
-                        WidthRequest="70" HeightRequest="60" Command="{Binding DisplayPopupCommand}"
-                        BackgroundColor="Lavender"/>
-            </Grid>
-        </VerticalStackLayout>
-
-        <CollectionView Grid.Row="1">
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type Models:ClipData}">
-                    <Models:ClipData
-                        Book="myBook"
-                        Title="code updates"
-                        Data="Let's start our journey together to build beautiful native cross-platform apps for iOS, Android, macOS, and Windows with .NET MAUI, C#, and Visual Studio! In this full workshop, I will walk you through everything you need to know about .NET MAUI and building your very first app."/>
-                    <Models:ClipData
-                        Book="myBook"
-                        Title="second clipdata"
-                        Data="Let's start our journey together to build beautiful native cross-platform apps for iOS, Android, macOS, and Windows with .NET MAUI, C#, and Visual Studio! In this full workshop, I will walk you through everything you need to know about .NET MAUI and building your very first app."/>
-                    <Models:ClipData
-    Book="myBook"
-    Title="code updates"
-    Data="Let's start our journey together to build beautiful native cross-platform apps for iOS, Android, macOS, and Windows with .NET MAUI, C#, and Visual Studio! In this full workshop, I will walk you through everything you need to know about .NET MAUI and building your very first app."/>
-                    <Models:ClipData
-    Book="myBook"
-    Title="second clipdata"
-    Data="Let's start our journey together to build beautiful native cross-platform apps for iOS, Android, macOS, and Windows with .NET MAUI, C#, and Visual Studio! In this full workshop, I will walk you through everything you need to know about .NET MAUI and building your very first app."/>
-
-
-                </x:Array>
-            </CollectionView.ItemsSource>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="Models:ClipData">
-                    
+
                     <VerticalStackLayout>
                         <Frame BackgroundColor="Lavender" Margin="10"
-                                   HeightRequest="170" CornerRadius="10"
-                                   HorizontalOptions="Fill" VerticalOptions="Center">
+                       HeightRequest="170" CornerRadius="10"
+                       HorizontalOptions="Fill" VerticalOptions="Center">
                             <VerticalStackLayout>
                                 <Label Text="{Binding Title}"
-                                       FontSize="Large"/>
+                           FontSize="Large"/>
 
                                 <BoxView Color="DarkBlue" HeightRequest="1" Margin="5"
-                                         HorizontalOptions="Fill" VerticalOptions="Center"/>
+                             HorizontalOptions="Fill" VerticalOptions="Center"/>
 
 
                                 <Label HorizontalOptions="Fill"
-                                       VerticalOptions="End"
-                                    Text="{Binding Data}"
-                                       FontSize="Body"/>
+                           VerticalOptions="End"
+                        Text="{Binding Data}"
+                           FontSize="Body"/>
 
                             </VerticalStackLayout>
                         </Frame>
@@ -81,5 +46,9 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <Button Grid.Row="2" ImageSource="add_icon.png" FontSize="Large" VerticalOptions="End" CornerRadius="40"
+                WidthRequest="70" HeightRequest="60" Command="{Binding AddNotesCommand}"
+                BackgroundColor="Lavender"/>
     </Grid>
 </ContentPage>

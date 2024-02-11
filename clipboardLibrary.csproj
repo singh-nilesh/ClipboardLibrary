@@ -58,7 +58,9 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\accelerate_icon.svg" />
+	  <None Remove="Resources\Images\add_icon.png" />
 	  <None Remove="Resources\Images\auto_icon.svg" />
+	  <None Remove="Resources\Images\edit_dots.png" />
 	  <None Remove="Resources\Images\export_icon.svg" />
 	  <None Remove="Resources\Images\home_icon.svg" />
 	  <None Remove="Resources\Images\page_icon.svg" />

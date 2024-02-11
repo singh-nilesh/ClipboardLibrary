@@ -19,15 +19,15 @@ namespace clipboardLibrary.Database
             await Db.CreateTableAsync<BooksList>();
         }
 
-        public async Task AddClip(string BookName, string titel, string DataVar)
+        public async Task AddClip(ClipData Note)
         {
             await Init();
 
             var clip = new ClipData
             {
-                Book = BookName,
-                Title = titel,
-                Data = DataVar
+                Book = Note.Book,
+                Title = Note.Title,
+                Data = Note.Data,
             };
             await Db.InsertAsync(clip)
                 .ContinueWith(t => { Debug.WriteLine("new clip added id = {0}", clip.Id); });

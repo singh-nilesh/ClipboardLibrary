@@ -4,7 +4,6 @@ using clipboardLibrary.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace clipboardLibrary.ViewModel
 {
@@ -21,7 +20,7 @@ namespace clipboardLibrary.ViewModel
         private ObservableCollection<BooksList> allBooks;
 
         [ObservableProperty]
-        private string _entryText;
+        private string? _entryText;
 
 
         [RelayCommand]
@@ -68,7 +67,7 @@ namespace clipboardLibrary.ViewModel
         }
 
 
-        public static BooksList SelectedBook;
+        public static BooksList? SelectedBook;
 
         [RelayCommand]
         async Task ShowBookContent(BooksList book)

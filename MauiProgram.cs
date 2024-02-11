@@ -24,6 +24,7 @@ namespace clipboardLibrary
 
             builder.Services.AddTransient<ShowBookViewModel>();
             builder.Services.AddTransient<BookContents>();
+            builder.Services.AddTransient<PopupPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
