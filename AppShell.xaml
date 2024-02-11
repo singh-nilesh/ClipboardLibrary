@@ -20,19 +20,19 @@
         <Tab Title="auto" Icon="auto_icon.svg">
             <ShellContent
                 ContentTemplate="{DataTemplate views:AutoPage}"
-                Route="homePage" />
+                Route="autopage" />
         </Tab>
 
         <Tab Title="pdf" Icon="page_icon.svg">
             <ShellContent
                 ContentTemplate="{DataTemplate views:PdfPage}"
-                Route="homePage" />
+                Route="pdfpage" />
         </Tab>
 
         <Tab Title="export" Icon="export_icon.svg">
             <ShellContent
                 ContentTemplate="{DataTemplate views:ExportPage}"
-                Route="homePage" />
+                Route="exportpage" />
         </Tab>
     </TabBar>
 </Shell>

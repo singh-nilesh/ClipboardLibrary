@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="clipboardLibrary.Views.PopupPage"
+             xmlns:toolkit="clr-namespace:MauiPopup.Views;assembly=MauiPopup">
+    
+    <VerticalStackLayout Padding="10" WidthRequest="450">
+        <Label Text="Add Note" HorizontalOptions="Center" FontSize="Title"/>
+        
+        <Entry Placeholder="Book name" FontSize="Medium"  HorizontalOptions="Fill"
+               FontAttributes="Bold"/>
+        
+        <Entry Placeholder="Titel" FontSize="Large" HorizontalOptions="Fill"/>
+        
+        <Frame HeightRequest="200" HorizontalOptions="Fill">
+            <Editor Placeholder="Content ......" HorizontalOptions="Fill" VerticalOptions="Fill"
+                    VerticalTextAlignment="Start" IsSpellCheckEnabled="True"/>
+        </Frame>
+        
+        <Grid Padding="25">
+            <Button Grid.Column="0" Text="Save" FontSize="Large" Margin="50, 0,0,0"
+                    HorizontalOptions="Start"/>
+            
+            <Button Grid.Column="1" Text="Cancel" FontSize="Large" Margin="0,0,  50,0"
+                    HorizontalOptions="End"/>
+        </Grid>
+    </VerticalStackLayout>
+</toolkit:BasePopupPage>

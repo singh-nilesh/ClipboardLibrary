@@ -14,4 +14,5 @@ public partial class BookContents : ContentPage
     {
         base.OnNavigatedTo(args);
     }
+
 }
