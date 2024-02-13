@@ -12,7 +12,7 @@ namespace clipboardLibrary.ViewModel
     {
         // Constructor
         public ShowBookViewModel(DbServices services)
-        { 
+        {
             _db = services;
             MyBook = BooksViewModel.SelectedBook;
             Debug.WriteLine(MyBook.Book);
@@ -34,6 +34,7 @@ namespace clipboardLibrary.ViewModel
 
         [ObservableProperty]
         private string? _searchEntry;
+
 
 
 
@@ -81,5 +82,22 @@ namespace clipboardLibrary.ViewModel
                 }
             }
         }
+
+        [RelayCommand]
+        private async Task DeleteNote(ClipData DelNotes)
+        {
+            await _db.RemoveClip(DelNotes);
+            await Application.Current.MainPage.DisplayAlert("Note Deleated", DelNotes.Title, "OK");
+            await LoadNotes();
+        }
+
+        [RelayCommand]
+        private async Task ShowNotes(ClipData EditNote)
+        {
+            if (EditNote is null)
+                return;
+            await Shell.Current.GoToAsync($"{nameof(NotesPage)}", true);
+        }
+
     }
 }

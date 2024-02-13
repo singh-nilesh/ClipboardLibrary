@@ -24,21 +24,41 @@
                 <DataTemplate x:DataType="Models:ClipData">
 
                     <VerticalStackLayout>
-                        <Frame BackgroundColor="Lavender" Margin="5" Padding="15,5"
-                       HeightRequest="170" CornerRadius="10"
-                       HorizontalOptions="Fill" VerticalOptions="Center">
-                            <VerticalStackLayout>
-                                <Label Text="{Binding Title}" FontSize="Large" TextColor="Purple"/>
 
-                                <BoxView Color="DarkBlue" HeightRequest="1" Margin="5"
-                             HorizontalOptions="Fill" VerticalOptions="Center"/>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Remove" BackgroundColor="Red" CommandParameter="{Binding .}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ShowBookViewModel}}, 
+                                        Path=DeleteNoteCommand}"/>
+
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame BackgroundColor="Lavender" Margin="5" Padding="15,5"
+                                   HeightRequest="170" CornerRadius="10"
+                                   HorizontalOptions="Fill" VerticalOptions="Center">
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ShowBookViewModel}},
+                                        Path=ShowNotesCommand}">
+                                    </TapGestureRecognizer>
+                                </Frame.GestureRecognizers>
+
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Title}" FontSize="Large" TextColor="Purple"/>
+
+                                    <BoxView Color="DarkBlue" HeightRequest="1" Margin="5"
+                                             HorizontalOptions="Fill" VerticalOptions="Center"/>
 
 
-                                <Label HorizontalOptions="Fill" VerticalOptions="End" Text="{Binding Data}"
+                                    <Label HorizontalOptions="Fill" VerticalOptions="End" Text="{Binding Data}"
                                        FontSize="Body" TextColor="DarkBlue"/>
 
-                            </VerticalStackLayout>
-                        </Frame>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </SwipeView>
                     </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -46,6 +66,6 @@
 
         <Button Grid.Row="2" Text="+" FontSize="60" VerticalOptions="End" CornerRadius="40" Padding="-25"
                 WidthRequest="60" HeightRequest="60" Command="{Binding AddNotesCommand}" Margin="10"
-                BackgroundColor="Lavender"/>
+                BackgroundColor="MediumPurple"/>
     </Grid>
 </ContentPage>

@@ -70,7 +70,7 @@ namespace clipboardLibrary.ViewModel
         public static BooksList? SelectedBook;
 
         [RelayCommand]
-        async Task ShowBookContent(BooksList Book)
+        private async Task ShowBookContent(BooksList Book)
         {
             if (Book is null)
                 return;
@@ -78,6 +78,27 @@ namespace clipboardLibrary.ViewModel
             await Shell.Current.GoToAsync($"{nameof(BookContents)}", true);
         }
 
-        
+
+        [RelayCommand]
+        private async Task RenameBook(BooksList RemBook)
+        {
+            string result = await Application.Current.MainPage.DisplayPromptAsync("Rename Book", "Enter a New Name");
+            if (!string.IsNullOrEmpty(result))
+            {
+                await _db.RenameBook(RemBook, result);
+            }
+            await LoadBooks();
+        }
+
+
+        [RelayCommand]
+        private async Task DeleteBook(BooksList DelBook)
+        {
+            await _db.RemoveBook(DelBook);
+            await Application.Current.MainPage.DisplayAlert("Book deleted", DelBook.Book, "OK");
+            await LoadBooks() ;
+        }
+
+
     }
 }

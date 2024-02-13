@@ -8,7 +8,7 @@
     Title="clipboardLibrary"
     
     xmlns:views="clr-namespace:clipboardLibrary.Views"
-    BackgroundColor="LightBlue">
+    BackgroundColor="MediumPurple">
 
     <TabBar>
         <Tab Title="Home" Icon="home_icon.svg">

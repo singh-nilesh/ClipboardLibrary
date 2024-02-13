@@ -47,9 +47,11 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Remove" BackgroundColor="Red"
-                                               />
-                                    <SwipeItem Text="Edit" BackgroundColor="DarkSeaGreen"/>
+                                    <SwipeItem Text="Remove" BackgroundColor="Red" CommandParameter="{Binding .}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BooksViewModel}}, Path=DeleteBookCommand}"/>
+
+                                    <SwipeItem Text="Rename" BackgroundColor="DarkSeaGreen" CommandParameter="{Binding .}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BooksViewModel}}, Path=RenameBookCommand}"/>
                                 </SwipeItems>
                             </SwipeView.RightItems>
 

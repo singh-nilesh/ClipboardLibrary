@@ -1,6 +1,7 @@
 ﻿using clipboardLibrary.Models;
 using SQLite;
 using System.Diagnostics;
+using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace clipboardLibrary.Database
 {
@@ -35,28 +36,28 @@ namespace clipboardLibrary.Database
                 .ContinueWith(t => { Debug.WriteLine("new clip added id = {0}", clip.Id); });
 
             // updating the bookitem count.
-            var count = await Db.Table<BooksList>().Where(b => b.Book.Equals(Note.Book)).CountAsync();
-            BooksList t_book = new()
+            var count = await Db.Table<ClipData>().Where(n => n.Book.Equals(Note.Book)).CountAsync();
+            var t_Book = await Db.Table<BooksList>().Where(b => b.Book.Equals(Note.Book)).FirstOrDefaultAsync();
+            if (t_Book != null)
             {
-                Book = Note.Book,
-                ItemCount = count
-            };
-            await Db.UpdateAsync(t_book);
+                t_Book.ItemCount = count;
+                await Db.UpdateAsync(t_Book);
+            }
         }
 
         public async Task RemoveClip(ClipData note)
         {
             await Init();
-            await Db.DeleteAsync<ClipData>(note);
+            await Db.DeleteAsync<ClipData>(note.Id);
 
             // updating the bookitem count.
-            var count = await Db.Table<BooksList>().Where(b => b.Book.Equals(note.Book)).CountAsync();
-            BooksList t_book = new BooksList
+            var count = await Db.Table<ClipData>().Where(n => n.Book.Equals(note.Book)).CountAsync();
+            var t_Book = await Db.Table<BooksList>().Where(b => b.Book.Equals(note.Book)).FirstOrDefaultAsync();
+            if (t_Book != null)
             {
-                Book = note.Book,
-                ItemCount = count
-            };
-            await Db.UpdateAsync(t_book);
+                t_Book.ItemCount = count;
+                await Db.UpdateAsync(t_Book);
+            }
 
         }
 
@@ -78,7 +79,7 @@ namespace clipboardLibrary.Database
             await Db.QueryAsync<ClipData>("delete * from ClipData where Book = ?", DelBook.Book)
                 .ContinueWith(t => { Debug.WriteLine("deleted Book " + DelBook.Book); });
             
-            await Db.DeleteAsync<BooksList>(DelBook.Id);
+            await Db.DeleteAsync<BooksList>(DelBook.Id).ContinueWith(t => { Debug.WriteLine(DelBook.Book+" Book deleted."); });
         }
 
         public async Task<bool> UpdateClip(ClipData newData)
@@ -111,10 +112,10 @@ namespace clipboardLibrary.Database
             {
                 item.Book = NewName;
             }
-            await Db.UpdateAllAsync(notes);
+            await Db.UpdateAllAsync(notes).ContinueWith(t => { Debug.WriteLine("Clipdata renamed."); });
 
             RenmBook.Book = NewName;
-            await Db.UpdateAsync(RenmBook);
+            await Db.UpdateAsync(RenmBook).ContinueWith(t => { Debug.WriteLine(RenmBook.Book+" book renamed."); });
         }
 
     }
