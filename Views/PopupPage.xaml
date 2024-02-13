@@ -7,13 +7,14 @@
 
              xmlns:toolkit="clr-namespace:MauiPopup.Views;assembly=MauiPopup">
     
-    <VerticalStackLayout Padding="10" WidthRequest="450">
+    <VerticalStackLayout Margin="10" WidthRequest="350">
         <Label Text="Add Note" HorizontalOptions="Center" FontSize="Title"/>
 
         <Entry x:Name="NotesTitel" Placeholder="Titel" FontSize="Large" HorizontalOptions="Fill"/>
         
-        <Frame HeightRequest="200" HorizontalOptions="Fill">
+        <Frame HeightRequest="300" HorizontalOptions="Fill">
             <Editor x:Name="NotesBody" Placeholder="Content ......" HorizontalOptions="Fill" VerticalOptions="Fill"
+                    TextColor="Black"
                     VerticalTextAlignment="Start" IsSpellCheckEnabled="True"/>
         </Frame>
 
@@ -21,10 +22,10 @@
                FontSize="Body" TextColor="Red" IsVisible="false"/>
 
         <Grid Padding="25">
-            <Button Grid.Column="0" Text="Save" FontSize="Large" Margin="50, 0,0,0"
+            <Button Grid.Column="0" Text="Save" FontSize="Medium" Margin="50, 0,0,0"
                     HorizontalOptions="Start" Clicked="Submit_Clicked"/>
 
-            <Button Grid.Column="1" Text="Cancel" FontSize="Large" Margin="0,0,  50,0"
+            <Button Grid.Column="1" Text="Cancel" FontSize="Medium" Margin="0,0,  50,0"
                     HorizontalOptions="End" Clicked="Cancel_Clicked"/>
         </Grid>
     </VerticalStackLayout>

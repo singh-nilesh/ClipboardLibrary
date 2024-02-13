@@ -19,6 +19,8 @@ namespace clipboardLibrary.Database
             await Db.CreateTableAsync<BooksList>();
         }
 
+
+        // Operations on ClipData
         public async Task AddClip(ClipData Note)
         {
             await Init();
@@ -31,12 +33,31 @@ namespace clipboardLibrary.Database
             };
             await Db.InsertAsync(clip)
                 .ContinueWith(t => { Debug.WriteLine("new clip added id = {0}", clip.Id); });
+
+            // updating the bookitem count.
+            var count = await Db.Table<BooksList>().Where(b => b.Book.Equals(Note.Book)).CountAsync();
+            BooksList t_book = new()
+            {
+                Book = Note.Book,
+                ItemCount = count
+            };
+            await Db.UpdateAsync(t_book);
         }
 
-        public async Task<bool> RemoveClip(int id)
+        public async Task RemoveClip(ClipData note)
         {
             await Init();
-            return await Db.DeleteAsync<ClipData>(id) > 0;
+            await Db.DeleteAsync<ClipData>(note);
+
+            // updating the bookitem count.
+            var count = await Db.Table<BooksList>().Where(b => b.Book.Equals(note.Book)).CountAsync();
+            BooksList t_book = new BooksList
+            {
+                Book = note.Book,
+                ItemCount = count
+            };
+            await Db.UpdateAsync(t_book);
+
         }
 
         public async Task<IEnumerable<ClipData>> GetBook(string BookName)
@@ -45,11 +66,19 @@ namespace clipboardLibrary.Database
             return await Db.QueryAsync<ClipData>("select * from ClipData where Book = ?", BookName);
         }
 
-        public async Task RemoveBook(string BookName)
+        public async Task<List<ClipData>> GetAllNotes()
         {
             await Init();
-            await Db.QueryAsync<ClipData>("delete * from ClipData where Book = ?", BookName)
-                .ContinueWith(t => { Debug.WriteLine("deleted Book " + BookName); });
+            return await Db.Table<ClipData>().ToListAsync();
+        }
+
+        public async Task RemoveBook(BooksList DelBook)
+        {
+            await Init();
+            await Db.QueryAsync<ClipData>("delete * from ClipData where Book = ?", DelBook.Book)
+                .ContinueWith(t => { Debug.WriteLine("deleted Book " + DelBook.Book); });
+            
+            await Db.DeleteAsync<BooksList>(DelBook.Id);
         }
 
         public async Task<bool> UpdateClip(ClipData newData)
@@ -58,6 +87,9 @@ namespace clipboardLibrary.Database
             return await Db.UpdateAsync(newData) > 0;
         }
 
+
+
+        // operations on Booklist
         public async Task<List<BooksList>> GetAllBooks()
         {
             await Init();
@@ -68,6 +100,21 @@ namespace clipboardLibrary.Database
         {
             await Init();
             await Db.InsertAsync(book);
+        }
+
+        public async Task RenameBook(BooksList RenmBook, string NewName)
+        {
+            await Init();
+            var notes = await Db.QueryAsync<ClipData>("select * from ClipData where Book = ?", RenmBook.Book);
+
+            foreach (var item in notes)
+            {
+                item.Book = NewName;
+            }
+            await Db.UpdateAllAsync(notes);
+
+            RenmBook.Book = NewName;
+            await Db.UpdateAsync(RenmBook);
         }
 
     }

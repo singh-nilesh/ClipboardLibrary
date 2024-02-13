@@ -70,11 +70,11 @@ namespace clipboardLibrary.ViewModel
         public static BooksList? SelectedBook;
 
         [RelayCommand]
-        async Task ShowBookContent(BooksList book)
+        async Task ShowBookContent(BooksList Book)
         {
-            if (book is null)
+            if (Book is null)
                 return;
-            SelectedBook = book;
+            SelectedBook = Book;
             await Shell.Current.GoToAsync($"{nameof(BookContents)}", true);
         }
 

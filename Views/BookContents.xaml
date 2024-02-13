@@ -13,9 +13,9 @@
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto, *">
-        <Frame Grid.Row="0" Padding="10, 5" Margin="0, 0, 10, 10" >
+        <Frame Grid.Row="0" Padding="5,-4,0,-5" Margin="5" HorizontalOptions="Fill" HeightRequest="40">
 
-            <Entry x:Name="Search" Placeholder="Search...." Text="{Binding SearchEntry}"  TextColor="#333"/>
+            <Entry x:Name="Search" Placeholder="Search...." Text="{Binding SearchEntry}" TextColor="#333"/>
         </Frame>
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding AllNotes}">
@@ -24,21 +24,18 @@
                 <DataTemplate x:DataType="Models:ClipData">
 
                     <VerticalStackLayout>
-                        <Frame BackgroundColor="Lavender" Margin="10"
+                        <Frame BackgroundColor="Lavender" Margin="5" Padding="15,5"
                        HeightRequest="170" CornerRadius="10"
                        HorizontalOptions="Fill" VerticalOptions="Center">
                             <VerticalStackLayout>
-                                <Label Text="{Binding Title}"
-                           FontSize="Large"/>
+                                <Label Text="{Binding Title}" FontSize="Large" TextColor="Purple"/>
 
                                 <BoxView Color="DarkBlue" HeightRequest="1" Margin="5"
                              HorizontalOptions="Fill" VerticalOptions="Center"/>
 
 
-                                <Label HorizontalOptions="Fill"
-                           VerticalOptions="End"
-                        Text="{Binding Data}"
-                           FontSize="Body"/>
+                                <Label HorizontalOptions="Fill" VerticalOptions="End" Text="{Binding Data}"
+                                       FontSize="Body" TextColor="DarkBlue"/>
 
                             </VerticalStackLayout>
                         </Frame>
@@ -47,8 +44,8 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="2" ImageSource="add_icon.png" FontSize="Large" VerticalOptions="End" CornerRadius="40"
-                WidthRequest="70" HeightRequest="60" Command="{Binding AddNotesCommand}"
+        <Button Grid.Row="2" Text="+" FontSize="60" VerticalOptions="End" CornerRadius="40" Padding="-25"
+                WidthRequest="60" HeightRequest="60" Command="{Binding AddNotesCommand}" Margin="10"
                 BackgroundColor="Lavender"/>
     </Grid>
 </ContentPage>
