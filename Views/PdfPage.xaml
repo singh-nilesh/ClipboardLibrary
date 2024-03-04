@@ -3,10 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="clipboardLibrary.Views.PdfPage"
              Title="PdfPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Pdf Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+    <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
+        <WebView x:Name="pdfView" HeightRequest="800"/>
+        
     </VerticalStackLayout>
 </ContentPage>

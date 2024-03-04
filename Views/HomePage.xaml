@@ -9,14 +9,14 @@
              x:DataType="viewmodel:BooksViewModel"
              BackgroundColor="Lavender">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Sign out"/>
+    <ContentPage.ToolbarItems >
+        <ToolbarItem Text="Sign out" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto, *">
 
         <VerticalStackLayout Grid.Row="0" Padding="5">
-            <Label Padding="2" Text="Dashboard"
+            <Label Padding="2" Text="Dashboard" TextColor="Black"
                    VerticalOptions="Center" HorizontalOptions="Start"
                    FontSize="Large"/>
 

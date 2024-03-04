@@ -2,6 +2,7 @@
 using clipboardLibrary.ViewModel;
 using clipboardLibrary.Views;
 using Microsoft.Extensions.Logging;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace clipboardLibrary
 {
@@ -12,6 +13,7 @@ namespace clipboardLibrary
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

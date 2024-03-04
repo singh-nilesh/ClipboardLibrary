@@ -1,7 +1,6 @@
 ﻿using clipboardLibrary.Models;
 using SQLite;
 using System.Diagnostics;
-using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace clipboardLibrary.Database
 {
